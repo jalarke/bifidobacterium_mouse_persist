@@ -1,0 +1,13 @@
+MouseID,Sample type,Treatment,Propylene glycol
+LJ1,Brain,MP80 + 2FL,0.246764352
+LJ2,Brain,MP80 + 2FL,0.562190875
+LJ3,Brain,MP80 + 2FL,0.232943369
+LL1,Brain,Control,0
+LL2,Brain,Control,0
+LL3,Brain,Control,0
+LJ1,Liver,MP80 + 2FL,0.098571548
+LJ2,Liver,MP80 + 2FL,0.231031128
+LJ3,Liver,MP80 + 2FL,0.212434923
+LL1,Liver,Control,0
+LL2,Liver,Control,0
+LL3,Liver,Control,0
