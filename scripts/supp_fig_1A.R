@@ -1,12 +1,11 @@
-#Figure 2A (currently): Alpha diversity at baseline for high/low Bifido mice (added to supplemental)
+#Figure S1A: Alpha diversity at baseline for high/low Bifido mice
 #data: map_alpha_baseline
-load("~/Research/Projects/Mouse metabolite cohorts/Britta code and figures/MouseMetaboliteManuscript.RData")
+load("../data/MouseMetaboliteManuscript.RData")
 #Normally distributed?
 shapiro.test(map_alpha_baseline$shan)
 #W = 0.95776, p-value = 0.7515
-#Normal! Proceed with t.test
+#Normal distribution; Proceed with t.test
 t.test(map_alpha_baseline$shan[map_alpha_baseline$Responder=="1"], map_alpha_baseline$shan[map_alpha_baseline$Responder=="0"])
-table(map_alpha_baseline$Responder)
 #t = -1.3182, df = 8.8557, p-value = 0.2205 
 
 library(ggplot2)
@@ -42,5 +41,3 @@ ggplot(data=map_alpha_baseline, aes(x=Responder2, y= shan, fill = Responder2)) +
   ) 
 
 ggsave("Supplemental_fig1_BaselineAlpha.tiff", width = 3, height = 3, units = "in", dpi=1000)
-
-save(nmds_weighted_mp80_2fl_alldays_plot, nmds_weighted_mp80_2fl_baseline_plot, nmds_weighted_mp80_2fl_final_plot, nmds_weighted_propionate_plot, nmds_weighted_propanediol_plot, map_alpha_baseline_baseline, songbird_butyrate, propanediol_map, propionate_map, songbird_respond_final, file = "MouseMetaboliteManuscript.RData")
