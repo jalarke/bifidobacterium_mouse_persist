@@ -3,11 +3,10 @@
 #Color Code by Time Period
 ##NEVER FORGET YOU NEED TO MODIFY PERMANOVA IF LONGITUDINAL DATA!! (strata!)
 
-
+load(file = '../data/WeightedUnifracTimeCourseMetaboliteProfiled.RData')
 
 library(dplyr)
 library(GUniFrac)
-setwd("/Volumes/GoogleDrive/Shared drives/Mills Lab/Britta/MetaboliteAnalysis/ANOVA_NMDS")
 
 #for GUniFrac command, need rarefied asv table
 #rownames = sampleid 
