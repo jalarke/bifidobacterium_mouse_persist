@@ -1,3 +1,4 @@
+# NMDS plots used as ordination method for comparing serum metabolites between Treatment groups
 
 ##Load libraries
 library(vegan)
@@ -5,28 +6,18 @@ library(goeveg)
 library(ggpubr)
 library(ggrepel)
 library(tidyverse)
-library(viridis)
-
-##Set file paths
-getwd()
-wd <- list()
-wd$data <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/data/"
-wd$output <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/output/"
-
 
 ##Load data sets
 
-serum <- read.csv(file.path(wd$data, "allserum.csv"))
-serum$X2..fucosyl.lactose <- NULL
-serum$N.N.Dimethylglycine <- NULL
-serum$Trimethylamine <- NULL
-serum$Acetoacetate <- NULL
-#serum$AMP <- NULL
-#serum$Ethanol <- NULL
+serum <- read.csv("../data/allserum_bifstatus.csv")
+serum$X2..fucosyl.lactose <- NULL # remove 2FL as CON and PRO groups did not receive for experimental setup
+serum$N.N.Dimethylglycine <- NULL # below LOD; remove
+serum$Trimethylamine <- NULL # below LOD; remove
+serum$Acetoacetate <- NULL # below LOD; remove
 
 ##transform data
 colnames(serum)
-for(j in 5:ncol(serum)){
+for(j in 7:ncol(serum)){
   for(i in 1:nrow(serum)){
     if(serum[i,j] > 0){
       serum[i,j] <- log(serum[i,j] + sqrt(serum[i,j]^2 + 1))
@@ -40,15 +31,12 @@ serum <-
   rename(
     serum,
     c(
-      "3-hydroxybutyrate" = "X3.Hydroxybutyrate",
-      "3-hydroxyisobutyrate" = "X3.Hydroxyisobutyrate",
-      "1,2-propanediol" = "Propylene.glycol",
-      "myo-inositol" = "myo.Inositol" 
+      "X3.Hydroxybutyrate" = "3-hydroxybutyrate",
+      "X3.Hydroxyisobutyrate" = "3-hydroxyisobutyrate",
+      "Propylene.glycol" = "1,2-propanediol",
+      "myo.Inositol" = "myo-inositol"
     )
   )
-
-##NMDS plots used as ordination method for comparing serum metabolites between Treatment groups
-
 
 ##Create new groups for each timepoint
 serum$Cohort <- as.factor(serum$Cohort)
@@ -56,12 +44,12 @@ serum$Treatment <- factor(serum$Treatment, levels = c("control", "MP80", "2FL", 
 
 ##NMDS
 colnames(serum)
-nmds.serum <- metaMDS(serum[5:ncol(serum)],autotransform=F, noshare=F, k = 2, distance = "euclidian")
+nmds.serum <- metaMDS(serum[7:ncol(serum)],autotransform=F, noshare=F, k = 2, distance = "euclidian")
 
 ##Check stress, values below 0.2 are recommended
 stressplot(nmds.serum)
 plot(nmds.serum)
-scree<- metaMDS(serum[5:ncol(serum)], distance= "euclidean") ## Stress = 0.
+scree<- metaMDS(serum[7:ncol(serum)], distance= "euclidean") ## Stress = 0.13
 
 ##Rename grouos
 mouse_id <- serum$MouseID
@@ -145,9 +133,9 @@ ggsave(
 
 #test whether the dispersons are the same (H0: dispersion A = dispersion B)
 
-nmdsdisp <- vegdist(serum[5:ncol(serum)], method = "euclidean")
+nmdsdisp <- vegdist(serum[7:ncol(serum)], method = "euclidean")
 
 disper.all<-betadisper(nmdsdisp, Treatment)
 
-TukeyHSD(disper.all) ##Dispersions are significantly different, cannot permanova
+TukeyHSD(disper.all) ##Dispersions are significantly different, cannot test with permanova
 plot(disper.all)
