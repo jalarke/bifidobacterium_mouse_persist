@@ -1,13 +1,8 @@
+#Figure S1B: Relative abundance of Lachnospiraceae and Ruminococcaceae at final time point for HE/ME groups
 library(tidyverse)
-library(forcats)
-##Set file paths
-getwd()
-wd <- list()
-wd$data <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/data/"
-wd$output <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/output/"
 
-
-data <- read.csv(file.path(wd$data,"metabolite_profiled_mice_081622.csv"))
+# Load data
+data <- read.csv("../data/metabolite_profiled_mice_081622.csv")
 data$Treatment <- recode_factor(data$Treatment, pbs_water = 'CON', mp80_water = 'PRO', pbs_2fl = 'PRE', mp80_2fl = 'SYN')
 data <- filter(data, !SampleID %in% c('lm3_d9', 'lm2_d9', 'lq1_d9', 'lq2_d9', 'lq3_d9', 'lo1_d9', 'lo2_d9', 'lo3_d9', 'lr1_d9', 'lr2_d9', 'lr3_d9')) #remove duplicate samples for final timepoint
 data <- filter(data, TimePeriod %in% c(0, 4, 9))
@@ -96,16 +91,3 @@ ggsave(
   width = 3,
   height = 3.5,
   dpi = 600)
-
-# get median rel. abundance of each taxon
-highb <- final_day %>%
-  filter(Responder == "HE")
-
-median(highb$Lachnospiraceae)
-median(highb$Ruminococcaceae)
-
-lowb <- final_day %>%
-  filter(Responder == "ME" )
-
-median(lowb$Lachnospiraceae)
-median(lowb$Ruminococcaceae)
