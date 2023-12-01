@@ -1,6 +1,8 @@
 #Figure 3B: Morisita-Horn for High/Low Bifido
 #data: mh_respond_glm
 
+load(file='../data/Morisita-Horn.RData')
+
 library(ggplot2)
 
 # ggplot(data=mh_respond_glm, aes(x=Responder2, y= MorisitaHornDistance, fill = Responder2)) + 
@@ -39,5 +41,3 @@ expand_limits(x = 0.5) +
     panel.background = element_blank()
   ) 
 ggsave("mh_respond_glm.tiff", width = 3, height = 3, units = "in", dpi=1000)
-
-#save(mh_respond_glm, file = "Morisita-Horn.RData")
