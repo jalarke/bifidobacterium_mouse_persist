@@ -1,16 +1,12 @@
-library(tidyverse)
-##Set file paths
-getwd()
-wd <- list()
-wd$data <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/data/"
-wd$output <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/output/"
+# Plot concentrations of 1,2-PD in liver and brain samples
 
-data <- read.csv(file.path(wd$data,"brain_liver_pg.csv"))
+library(tidyverse)
+
+data <- read.csv("../data/brain_liver_pg.csv")
 
 data$Sample.type <- factor(data$Sample.type, levels = c("Liver", "Brain"), ordered = TRUE)
 
-
-brain <-
+brain_liver <-
   ggplot(data, aes(x = Sample.type, y = Propylene.glycol, group = Treatment, color = Treatment)) +
   geom_point(size = 4, position = position_dodge2(width=0.7)) +
   geom_point(size = 4, pch = 21,  color = "black", position = position_dodge2(width=0.7)) +
@@ -28,7 +24,7 @@ brain <-
     axis.text.y = element_text(size = 8),
     legend.title = element_blank()
   )
-brain
+brain_liver
 
 ggsave(
   file = "brain_liver_pg.tiff",
