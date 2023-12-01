@@ -1,28 +1,10 @@
-#Figure 3C (Currently): High/Low Bif Final Day NMDS to be added to supplementary
+#Figure 3C: High/Low Bif Final Day NMDS
 #Data: nmds_weighted_mp80_2fl_final_plot
+
+load(file = '../data/MouseMetaboliteManuscript.RData')
 
 set.seed(42)
 library(tidyverse)
-
-#Need to change from High/Low Bifido to Responder/NonResponder?
-#nmds_weighted_mp80_2fl_final_plot <- mutate(nmds_weighted_mp80_2fl_final_plot, Responder2  = case_when(
-#Responder2 == '1' ~ "High Bifido",
-# Responder2 == '0' ~ "Low Bifido",))
-
-#Add grouping
-#nmds_weighted_mp80_2fl_final_plot$Responder2 -> nmds_weighted_mp80_2fl_final_plot$group
-
-#Weighted: Creating data frame that contains data on Ellipses
-#nmds_weighted_mp80_2fl_final_plot$group <- as.factor(nmds_weighted_mp80_2fl_final_plot$group)
-
-#nmds_weighted_mp80_2fl_final_plot$MDS1 <- as.factor(nmds_weighted_mp80_2fl_final_plot$group)
-###then, one critical step is to exactly caculate the eclipse data use the grouping factors; ef_ell is the data frame 
-# df_ell_wu <- data.frame()
-# for(g in levels(nmds_weighted_mp80_2fl_final_plot$group)){
-#   df_ell_wu <- rbind(df_ell_wu, cbind(as.data.frame(with(nmds_weighted_mp80_2fl_final_plot[nmds_weighted_mp80_2fl_final_plot$group==g,],
-#                                                          veganCovEllipse(cov.wt(cbind(MDS1,MDS2),wt=rep(1/length(MDS1),length(MDS1)))$cov,center=c(mean(MDS1),mean(MDS2))))),
-#                                       group=g))
-# }
 
 nmds.dat <- aggregate(cbind(MDS1, MDS2) ~ group, data = nmds_weighted_mp80_2fl_final_plot, FUN = mean)
 nmds.dat1 <- nmds_weighted_mp80_2fl_final_plot %>%
