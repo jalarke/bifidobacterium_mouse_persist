@@ -1,3 +1,4 @@
+# Test for difference in concentration of serum metabolites across HE/ME groups
 
 ##Load libraries
 library(ggplot2)
@@ -6,45 +7,22 @@ library(cowplot)
 library(plyr)
 library(FSA)
 
-
-##Set file paths
-getwd()
-wd <- list()
-wd$data <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/data/"
-wd$output <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/output/"
-
-
 ##Load data sets
-serum <- read.csv(file.path(wd$data, "allserum_bifstatus.csv"))
+serum <- read.csv("../data/allserum_bifstatus.csv")
 
 ##Remove metabolites to which quantitation is below LOQ
 serum$X2..fucosyl.lactose <- NULL
-serum$AMP <- NULL
 serum$N.N.Dimethylglycine <- NULL
-serum$O.Acetylcarnitine <- NULL
 serum$Trimethylamine <- NULL
-
-# serum <-
-#   rename(
-#     serum,
-#     c(
-#       "X2.Oxoglutarate" = "2-oxoglutarate",
-#       "X4.Hydroxyphenylacetate" = "4-hydroxyphenylacetate",
-#       "X5.Aminopentanoate" = "5-aminopentanoate",
-#       "Propylene.glycol" = "1,2-propanediol",
-#       "myo.Inositol" = "myo-Inositol"
-#     )
-#   )
+serum$Acetoacetate <- NULL
 
 serum$bifstatus <- factor(serum$bifstatus, levels = c(">50%", "<50%"), ordered = TRUE)
 
 mp802fl <- serum[serum$Treatment == "MP80 2FL",]
 
-
-
 ## Create table of p-values to annotate plots with symbols for significance
-pValues <- matrix(NA, nrow = 1, ncol = 44)
-colnames(pValues) <- colnames(serum)[7:50]
+pValues <- matrix(NA, nrow = 1, ncol = 45)
+colnames(pValues) <- colnames(serum)[7:51]
 ##Dunn's posthoc test for kruskal wallis
 for (i in 7:ncol(serum)) {  #loop
   model = t.test(mp802fl[,i] ~ bifstatus, mp802fl) #wilcox.test 
@@ -57,9 +35,6 @@ pValueadj <- as.data.frame(p.adjust(pValues, "fdr"))
 colnames(pValueadj) <- "MP80+2FL_bifstatus"
 rownames(pValueadj) <- colnames(pValues)
 pValueadj
-
-
-write.csv(pValueadj, file = "output/ANOVA/Serum_FDR_corrected_t_test_20210108.csv")
 
 labs <- c("HE", "ME")
 
@@ -92,4 +67,3 @@ ggsave(
   width = 2.5,
   height = 3
 )
-
