@@ -1,3 +1,4 @@
+# Test differences in metabolites across HE/ME groups
 
 ##Load libraries
 library(ggplot2)
@@ -6,16 +7,8 @@ library(cowplot)
 library(plyr)
 library(FSA)
 
-
-##Set file paths
-getwd()
-wd <- list()
-wd$data <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/data/"
-wd$output <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/output/"
-
-
 ##Load data sets
-colon <- read.csv(file.path(wd$data, "colon_bifstatus.csv"))
+colon <- read.csv("../data/colon_bifstatus.csv")
 
 colon$Treatment <- factor(colon$Treatment, levels = c("control", "MP80", "2FL", "MP80 2FL"), ordered = TRUE)
 
@@ -42,7 +35,7 @@ rownames(pValueadj) <- colnames(pValues)
 pValueadj
 
 
-write.csv(pValueadj, file = "output/ANOVA/FDR_corrected_t_test_20210401.csv")
+#write.csv(pValueadj, file = "output/ANOVA/FDR_corrected_t_test_20210401.csv")
 
 labs <- c("HE", "ME")
 
@@ -97,7 +90,7 @@ boxplot2 <-
   labs(title = "Formate", y = "", x = "") +
   annotate("segment", x = 1, xend = 2, y = max(mp802fl$Formate)+0.25, yend = max(mp802fl$Formate)+0.25,
            colour = "black") +
-  annotate("text", x = 1.5, y = max(mp802fl$Formate)+0.5, label = "‡", size = 3) +
+  annotate("text", x = 1.5, y = max(mp802fl$Formate)+0.5, label = "â¡", size = 3) +
   scale_x_discrete(labels = labs) +
   theme_classic() +
   theme(
