@@ -4,13 +4,9 @@ library(tidyverse)
 library(forcats)
 library(RColorBrewer)
 library(cowplot)
-##Set file paths
-getwd()
-wd <- list()
-wd$data <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/data/"
-wd$output <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/output/"
 
-data <- read_csv(file.path(wd$data,"total_ratios.csv"))
+#Load data
+data <- read_csv("../data/total_ratios.csv")
 data$Treatment <- factor(data$Treatment, levels = c("control", "MP80", "2FL", "MP80 2FL"))
 
 data1 <- pivot_longer(data, c(acetate_ratio, propionate_ratio, butyrate_ratio, lactate_ratio, formate_ratio, pyruvate_ratio, succinate_ratio), names_to = "acid", values_to = "proportion")
