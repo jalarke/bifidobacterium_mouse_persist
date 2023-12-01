@@ -1,7 +1,7 @@
 #Classification Tree for Metabolite Mice Baseline between Persist:NonPersist
 #n=12
 #
-save(classtree_persist_test, classtree_persist, classificationv2, file = "ClassificationTree-Jules.RData")
+load(file = "../data/ClassificationTree-Jules.RData")
 library(rpart)
 library(dplyr)
 
@@ -34,30 +34,3 @@ table(classtree_persist$`Clostridiales vadingroup`, classtree_persist$Subject)
 #costridiales vadingroup is likely a case of oversplitting the tree
 #Conclusion: At baseline, having below 1% Erysipelotrichaceae is a marker for predicting whether a mouse would be a responder/non-responder.
 #HOWEVER, there is one case where a mouse with high Erysipelo was categorized as a responder. 
-
-
-#Step 5:Validate findings with a categorization of below or above 0.009 Erysip and run chi-squared test for responder
-#chi-square test of independence is used to analyze the frequency table (i.e. contengency table) formed by two categorical variables. The chi-square test evaluates whether there is a significant association between the categories of the two variables.
-#http://www.sthda.com/english/wiki/chi-square-test-of-independence-in-r
-#Null hypothesis (H0): the row and the column variables of the contingency table are independent.
-#Alternative hypothesis (H1): row and column variables are dependent
-?chisq.test
-
-#Categorize 0/1 based on Erysipelo >= 0.009
-classtree_persist$Erysipelotrichaceae -> classtree_persist$Erysip_category
-classtree_persist <- mutate(classtree_persist, Erysip_category  = case_when(
-  Erysip_category >= 0.009 ~ '0',
-  Erysip_category < 0.009 ~ "1",))
-class(classtree_persist$Erysip_category)
-
-chisq <- chisq.test(classtree_persist$Erysip_category, classtree_persist$Responder)
-chisq
-#X-squared = 5.1857, df = 1, p-value = 0.02277
-
-chisq$observed
-round(chisq$expected,2)
-round(chisq$residuals,3)
-library(corrplot)
-corrplot(chisq$residuals, is.corr = FALSE)
-
-
