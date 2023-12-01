@@ -6,20 +6,10 @@ library(goeveg)
 library(ggpubr)
 library(ggrepel)
 library(tidyverse)
-library(viridis)
-library(plyr)
 
-##Set file paths
-getwd()
-wd <- list()
-wd$data <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/data/"
-wd$output <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/output/"
-
-
-##Load data sets
-
-colon <- read.csv(file.path(wd$data, "colonv4.csv"))
-colon$X2..fucosyl.lactose <- NULL
+##Load data
+colon <- read.csv("../data/colonv4.csv")
+colon$X2..fucosyl.lactose <- NULL # remove 2FL as CON and PRO groups did not receive for experimental setup
 
 ##transform data
 colnames(colon)
@@ -132,7 +122,7 @@ ggsave(
 
 #test whether the dispersons are the same (H0: dispersion A = dispersion B)
 
-nmdsdisp <- vegdist(colon[5:ncol(colon)], method = "euclidean")
+nmdsdisp <- vegdist(colon[4:ncol(colon)], method = "euclidean")
 
 disper.all<-betadisper(nmdsdisp, Treatment)
 
@@ -141,5 +131,3 @@ TukeyHSD(disper.all) ##Dispersions not the same, Ad
 plot(disper.all)
 
 ##reject null hypothesis; the groups have different dispersions; will NOT meet assumptions of permanova
-
-
