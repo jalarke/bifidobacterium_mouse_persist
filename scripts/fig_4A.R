@@ -9,7 +9,7 @@ library(tidyverse)
 
 ##Load data
 colon <- read.csv("../data/colonv4.csv")
-colon$X2..fucosyl.lactose <- NULL # remove 2FL as CON and PRO groups did not receive for experimental setup
+colon$X2..fucosyl.lactose <- NULL # remove 2FL as CON and PRO groups did not recieve for experimental setup
 
 ##transform data
 colnames(colon)
