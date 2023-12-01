@@ -82,7 +82,7 @@ dunn.test::dunn.test(final_day$Bacteroidaceae, final_day$Treatment, method = "bh
 
 baclab <- expression(paste(italic("Bacteroidaceae")))
 
-##figure 6C
+##figure 5C
 bact_line <-
   ggplot(data, aes(x = TimePeriod, y = Bacteroidaceae, group = Treatment, color = Treatment)) +
   stat_summary(
@@ -131,7 +131,7 @@ ggsave(
 kruskal.test(final_day$Lachnospiraceae, final_day$Treatment) #Significance test
 dunn.test::dunn.test(final_day$Lachnospiraceae, final_day$Treatment, method = "bh")
 
-
+# Figure 5A
 lachlab <- expression(paste(italic("Lachnospiraceae")))
 
 lach_line <-
@@ -189,6 +189,7 @@ ggsave(
 kruskal.test(final_day$Ruminococcaceae, final_day$Treatment) #Significance test
 dunn.test::dunn.test(final_day$Ruminococcaceae, final_day$Treatment, method = "bh")
 
+# Figure 5B
 rumilab <- expression(paste(italic("Ruminococcaceae")))
 
 rumi_line <-
@@ -297,7 +298,7 @@ metab$Treatment <- recode_factor(metab$Treatment, control = 'CON', MP80 = 'PRO',
 kruskal.test(metab$Fucose, metab$Treatment) #Significance test
 dunn.test::dunn.test(metab$Fucose, metab$Treatment, method = "bh")
 
-#figure 6D
+#figure 5D
 fucose <-
   ggplot(metab, aes(x = Treatment, y = Fucose, fill = Treatment)) +
   geom_boxplot(outlier.shape = 21, outlier.size =2) +
@@ -335,7 +336,7 @@ ggsave(
   width = 3,
   height = 3)
 
-#figure 6e
+#figure 5E
 meta_pre_syn <- metab %>% filter(Treatment == 'PRE' | Treatment == "SYN")
 meta_pre_syn <- meta_pre_syn[-3,]  #remove lj3 as it corresponds to day 6
 pre_syn <- final_day %>% filter(Treatment == 'PRE' | Treatment == "SYN")
