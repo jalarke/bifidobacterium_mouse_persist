@@ -1,12 +1,6 @@
 library(tidyverse)
-library(forcats)
-##Set file paths
-getwd()
-wd <- list()
-wd$data <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/data/"
-wd$output <- "C:/Users/jalarke/Documents/Research/Projects/Mouse metabolite cohorts/output/"
 
-data <- read.csv(file.path(wd$data,"metabolite_profiled_mice_081622.csv"))
+data <- read.csv("../data/metabolite_profiled_mice_081622.csv")
 data$Treatment <- recode_factor(data$Treatment, pbs_water = 'CON', mp80_water = 'PRO', pbs_2fl = 'PRE', mp80_2fl = 'SYN')
 data <- filter(data, !SampleID %in% c('lm3_d9', 'lm2_d9', 'lq1_d9', 'lq2_d9', 'lq3_d9', 'lo1_d9', 'lo2_d9', 'lo3_d9', 'lr1_d9', 'lr2_d9', 'lr3_d9')) #remove duplicate samples for final timepoint
 data <- filter(data, TimePeriod %in% c(0, 4, 9))
@@ -46,7 +40,7 @@ bif_all_group_time <-
   ) +
   annotate("segment", x = 3.55, xend = 3.55, y = 0.38976, yend = 0.04522,
            colour = "black", size = 1) +
-  annotate("text", x = 3.7, y = (0.38976+0.04522)/2, label = "**", size = 8) +
+  annotate("text", x = 3.7, y = (0.38976+0.04522)/2, label = "*", size = 8) +
   annotate("segment", x = 3.15, xend = 3.15, y = 0.38976, yend = 0.012500 ,
            colour = "black", size = 1) +
   annotate("text", x = 3.35, y = (0.38976+0.012500 )/2, label = "**", size = 8) +
@@ -294,7 +288,7 @@ ggsave(
   dpi = 600)
 
 
-metab <- read.csv(file.path(wd$data, "colonv4.csv")) #Load metabolite data
+metab <- read.csv("../data/colonv4.csv") #Load metabolite data
 
 metab$Treatment <- factor(metab$Treatment, levels = c("control", "MP80", "2FL", "MP80 2FL"), ordered = T)
 metab$Treatment <- recode_factor(metab$Treatment, control = 'CON', MP80 = 'PRO', `2FL` = 'PRE', `MP80 2FL` = 'SYN')
